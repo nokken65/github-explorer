@@ -1,0 +1,66 @@
+fragment LicensePreview on License {
+  name
+}
+
+fragment PrimaryLanguagePreview on Language {
+  color
+  id
+  name
+}
+
+fragment RepositoryTopicPreview on RepositoryTopic {
+  topic {
+    id
+    name
+  }
+  url
+}
+
+fragment RepositoryPreview on Repository {
+  id
+  nameWithOwner
+  description
+  isPrivate
+  url
+  pushedAt
+  stargazerCount
+  licenseInfo {
+    ...LicensePreview
+  }
+  primaryLanguage {
+    ...PrimaryLanguagePreview
+  }
+  repositoryTopics(first: 10) {
+    topics: nodes {
+      ...RepositoryTopicPreview
+    }
+  }
+}
+
+query searchRepositories(
+  $query: String!
+  $first: Int
+  $last: Int
+  $before: String
+  $after: String
+) {
+  search(
+    query: $query
+    first: $first
+    last: $last
+    before: $before
+    after: $after
+    type: REPOSITORY
+  ) {
+    repositories: nodes {
+      ...RepositoryPreview
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    repositoryCount
+  }
+}

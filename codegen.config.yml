@@ -1,0 +1,15 @@
+schema: https://docs.github.com/public/schema.docs.graphql
+documents: './src/shared/api/**/*.graphql'
+generates:
+  ./src/shared/api/github/types.ts:
+    plugins:
+      - add:
+          content:
+            - '/* eslint-disable */'
+      - typescript
+      - typescript-operations
+      - typed-document-node
+overwrite: true
+config:
+  exportFragmentSpreadSubTypes: true
+  skipTypename: true
