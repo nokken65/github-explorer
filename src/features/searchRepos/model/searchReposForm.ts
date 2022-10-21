@@ -1,7 +1,6 @@
 import { createEvent, sample } from 'effector';
 
 import { TSearchReposFormInputs } from './models';
-import { $page } from './pagination';
 import { $searchReposParams } from './searchReposParams';
 
 const searchReposFormSubmitted = createEvent<TSearchReposFormInputs>();
@@ -17,12 +16,6 @@ sample({
     page: 1,
   }),
   target: $searchReposParams,
-});
-
-sample({
-  clock: searchReposFormSubmitted,
-  fn: () => 1,
-  target: $page,
 });
 
 export { searchReposFormSubmitted };

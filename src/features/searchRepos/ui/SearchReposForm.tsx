@@ -4,7 +4,7 @@ import { Badge } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { Form } from '@/shared/components';
+import { Button, Form, Row } from '@/shared/components';
 
 import { $searchReposParams, searchReposFormSubmitted } from '../model';
 import { TSearchReposFormInputs } from '../model/models';
@@ -36,19 +36,24 @@ const SearchReposFormView = ({ initials, onSubmit }: SearchReposFormProps) => {
       <Form.Input<TSearchReposFormInputs>
         clearable
         contentRight={
-          <Badge
-            disableOutline
-            isSquared
-            as='kbd'
-            css={{
-              background: 'unset',
-              h: 'fit-content',
-              mx: '$xs',
-            }}
-            variant='flat'
-          >
-            ^ K
-          </Badge>
+          <Row css={{ flexWrap: 'nowrap', alignItems: 'center', gap: 0 }}>
+            <Badge
+              disableOutline
+              isSquared
+              as='kbd'
+              css={{
+                background: 'unset',
+                h: 'fit-content',
+                mx: '$xs',
+              }}
+              variant='flat'
+            >
+              ^ K
+            </Badge>
+            <Button auto type='submit'>
+              Search
+            </Button>
+          </Row>
         }
         name='q'
         placeholder='Search...'
