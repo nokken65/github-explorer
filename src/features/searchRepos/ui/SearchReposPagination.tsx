@@ -1,12 +1,12 @@
 import { reflect } from '@effector/reflect';
 import { Pagination } from '@nextui-org/react';
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import { Row } from '@/shared/components';
 
-import { $page, $totalPages, setPage } from '../model';
+import { $totalPages, searchReposParams, setPage } from '../model';
 
-type SearchReposPaginationProps = {
+type TSearchReposPaginationProps = {
   page: number;
   total: number;
   set: (page: number) => void;
@@ -16,7 +16,7 @@ const SearchReposPaginationView = ({
   page,
   total,
   set,
-}: SearchReposPaginationProps) => {
+}: TSearchReposPaginationProps) => {
   const handleChangePage = useCallback((newPage: number) => {
     set(newPage);
     // window.scrollTo({ top: 0 });
@@ -25,6 +25,7 @@ const SearchReposPaginationView = ({
   return (
     <Row css={{ justifyContent: 'center' }}>
       <Pagination
+        noMargin
         as='ul'
         initialPage={page}
         total={total}
@@ -34,11 +35,13 @@ const SearchReposPaginationView = ({
   );
 };
 
-export const SearchReposPagination = reflect({
-  view: SearchReposPaginationView,
-  bind: {
-    page: $page,
-    total: $totalPages,
-    set: setPage,
-  },
-});
+export const SearchReposPagination = memo(
+  reflect({
+    view: SearchReposPaginationView,
+    bind: {
+      page: searchReposParams.$page,
+      total: $totalPages,
+      set: setPage,
+    },
+  }),
+);

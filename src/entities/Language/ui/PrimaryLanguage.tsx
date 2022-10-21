@@ -3,9 +3,9 @@ import { memo } from 'react';
 
 import { TLanguage } from '../model/models';
 
-type PrimaryLanguageProps = TLanguage;
+type TPrimaryLanguageProps = TLanguage;
 
-const PrimaryLanguageView = ({ name, color }: PrimaryLanguageProps) => {
+const PrimaryLanguageView = ({ name, color }: TPrimaryLanguageProps) => {
   return (
     <Text
       css={{

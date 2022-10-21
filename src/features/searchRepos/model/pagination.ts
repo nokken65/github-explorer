@@ -1,18 +1,16 @@
 import { createEvent, createStore, sample } from 'effector';
 
 import { searchRepos } from '../api';
-import { $searchReposParams } from './searchReposParams';
+import { searchReposParams } from './searchReposParams';
 
 const setPage = createEvent<number>();
 
-const $page = createStore<number>(1);
-const $perPage = createStore<number>(21);
 const $totalPages = createStore<number>(1);
 
 sample({
   clock: searchRepos.$data,
   source: {
-    perPage: $perPage,
+    perPage: searchReposParams.$perPage,
   },
   fn: ({ perPage }, data) =>
     Math.ceil(
@@ -25,25 +23,17 @@ sample({
 sample({
   clock: setPage,
   source: {
-    page: $page,
+    page: searchReposParams.$page,
     totalPages: $totalPages,
   },
   filter: ({ totalPages }, newPage) => newPage >= 1 && newPage <= totalPages,
   fn: (_, newPage) => newPage,
-  target: $page,
+  target: searchReposParams.$page,
 });
 
 sample({
-  clock: [setPage],
-  source: {
-    page: $page,
-    searchReposParams: $searchReposParams,
-  },
-  fn: ({ page, searchReposParams }) => ({
-    ...searchReposParams,
-    page,
-  }),
-  target: $searchReposParams,
+  clock: searchReposParams.$page,
+  target: searchReposParams.$page,
 });
 
-export { $page, $perPage, $totalPages, setPage };
+export { $totalPages, setPage };

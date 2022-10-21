@@ -1,9 +1,9 @@
 import { Text } from '@nextui-org/react';
 import { memo } from 'react';
 
-type LicenseNameProps = { name: string };
+type TLicenseNameProps = { name: string };
 
-const LicenseNameView = ({ name }: LicenseNameProps) => {
+const LicenseNameView = ({ name }: TLicenseNameProps) => {
   return (
     <Text
       css={{

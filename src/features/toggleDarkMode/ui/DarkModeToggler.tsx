@@ -5,7 +5,7 @@ import { Button } from '@/shared/components';
 import { ReactComponent as DarkIcon } from '@/shared/icons/dark-icon.svg';
 import { ReactComponent as LightIcon } from '@/shared/icons/light-icon.svg';
 
-type DarkModeTogglerProps = {
+type TDarkModeTogglerProps = {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
 };
@@ -13,7 +13,7 @@ type DarkModeTogglerProps = {
 const DarkModeTogglerView = ({
   isDarkMode,
   toggleDarkMode,
-}: DarkModeTogglerProps) => {
+}: TDarkModeTogglerProps) => {
   return (
     <Button
       auto

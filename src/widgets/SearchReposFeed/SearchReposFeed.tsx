@@ -1,7 +1,6 @@
-import { list } from '@effector/reflect';
+import { list, reflect } from '@effector/reflect';
 import { Grid, Progress, Spacer } from '@nextui-org/react';
 import { useUnit } from 'effector-react';
-import { memo } from 'react';
 
 import { languageModel, PrimaryLanguage } from '@/entities/Language';
 import { LicenseName } from '@/entities/License';
@@ -14,6 +13,8 @@ import {
   SearchReposForm,
   searchReposModel,
   SearchReposPagination,
+  SearchReposSort,
+  SearchReposSortOrder,
   TSearchReposResultData,
 } from '@/features/searchRepos';
 import { Column, Row } from '@/shared/components';
@@ -57,12 +58,45 @@ const SearchReposList = list({
   getKey: ({ id }) => id,
 });
 
-const SearchReposFeedView = () => {
-  const [isLoading, isEmpty] = useUnit([
-    searchReposModel.$searchedReposIsLoading,
-    searchReposModel.$searchedReposIsEmpty,
-  ]);
+const SearchReposListWithContainer = () => {
+  return (
+    <Column
+      css={{
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        gap: '$xl',
+      }}
+    >
+      <SearchReposPagination />
+      <Grid
+        as='ul'
+        css={{
+          display: 'grid',
 
+          '@mdMax': {
+            gap: '$4',
+          },
+          '@mdMin': {
+            gap: '$8',
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr));',
+          },
+        }}
+      >
+        <SearchReposList />
+      </Grid>
+    </Column>
+  );
+};
+
+type TSearchReposFeedViewProps = {
+  isLoading: boolean;
+  isEmpty: boolean;
+};
+
+const SearchReposFeedView = ({
+  isLoading,
+  isEmpty,
+}: TSearchReposFeedViewProps) => {
   return (
     <Column
       css={{
@@ -82,35 +116,24 @@ const SearchReposFeedView = () => {
 
       <Spacer />
 
-      {isEmpty && <SearchReposEmpty />}
-      {!isEmpty && (
-        <Column
-          css={{
-            flexGrow: 1,
-            justifyContent: 'space-between',
-          }}
-        >
-          <SearchReposPagination />
-          <Grid
-            as='ul'
-            css={{
-              display: 'grid',
+      <Row css={{ justifyContent: 'space-between' }}>
+        <Spacer css={{ mr: 'auto' }} />
+        <SearchReposSort />
+        <SearchReposSortOrder />
+      </Row>
 
-              '@mdMax': {
-                gap: '$4',
-              },
-              '@mdMin': {
-                gap: '$8',
-                gridTemplateColumns: 'repeat(3, minmax(0, 1fr));',
-              },
-            }}
-          >
-            <SearchReposList />
-          </Grid>
-        </Column>
-      )}
+      {isEmpty ? <SearchReposEmpty /> : <SearchReposListWithContainer />}
     </Column>
   );
 };
 
-export const SearchReposFeed = memo(SearchReposFeedView);
+export const SearchReposFeed = reflect({
+  view: SearchReposFeedView,
+  bind: {
+    isLoading: searchReposModel.$searchedReposIsLoading,
+    isEmpty: searchReposModel.$searchedReposIsEmpty,
+  },
+  hooks: {
+    mounted: () => languageModel.loadLanguagesColorsFx(),
+  },
+});

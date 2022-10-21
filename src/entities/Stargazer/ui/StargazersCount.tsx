@@ -1,14 +1,16 @@
 import { Text } from '@nextui-org/react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { ReactComponent as StarIcon } from '@/shared/icons/star-icon.svg';
 import { numberToShort } from '@/shared/utils';
 
-type StargazersCountProps = {
+type TStargazersCountProps = {
   count: number;
 };
 
-const StargazersCountView = ({ count }: StargazersCountProps) => {
+const StargazersCountView = ({ count }: TStargazersCountProps) => {
+  const formattedCount = useMemo(() => numberToShort(count), []);
+
   return (
     <Text
       css={{
@@ -17,7 +19,7 @@ const StargazersCountView = ({ count }: StargazersCountProps) => {
       }}
     >
       <StarIcon style={{ marginRight: '0.2rem' }} />
-      {numberToShort(count)}
+      {formattedCount}
     </Text>
   );
 };

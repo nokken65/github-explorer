@@ -5,7 +5,9 @@ import { RepoCardBody } from './RepoCardBody';
 import { RepoCardFooter } from './RepoCardFooter';
 import { RepoCardHeader } from './RepoCardHeader';
 
-const RepoCard = ({ children }: PropsWithChildren) => {
+type TRepoCardProps = PropsWithChildren;
+
+const RepoCard = ({ children }: TRepoCardProps) => {
   return (
     <Card
       isHoverable

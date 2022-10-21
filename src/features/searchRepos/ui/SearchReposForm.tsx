@@ -1,24 +1,27 @@
 import { reflect } from '@effector/reflect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Badge } from '@nextui-org/react';
+import { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { Button, Form, Row } from '@/shared/components';
 
-import { $searchReposParams, searchReposFormSubmitted } from '../model';
+import { searchReposFormSubmitted, searchReposParams } from '../model';
 import { TSearchReposFormInputs } from '../model/models';
 import { searchReposSchema } from '../validation';
 
-type SearchReposFormProps = {
-  initials: TSearchReposFormInputs;
+type TSearchReposFormProps = {
+  initial: string;
   onSubmit: (data: TSearchReposFormInputs) => void;
 };
 
-const SearchReposFormView = ({ initials, onSubmit }: SearchReposFormProps) => {
+const SearchReposFormView = ({ initial, onSubmit }: TSearchReposFormProps) => {
   const methods = useForm<TSearchReposFormInputs>({
     resolver: zodResolver(searchReposSchema),
-    defaultValues: initials,
+    defaultValues: {
+      q: initial,
+    },
     mode: 'all',
   });
 
@@ -50,7 +53,7 @@ const SearchReposFormView = ({ initials, onSubmit }: SearchReposFormProps) => {
             >
               ^ K
             </Badge>
-            <Button auto type='submit'>
+            <Button auto flat type='submit'>
               Search
             </Button>
           </Row>
@@ -62,10 +65,12 @@ const SearchReposFormView = ({ initials, onSubmit }: SearchReposFormProps) => {
   );
 };
 
-export const SearchReposForm = reflect({
-  view: SearchReposFormView,
-  bind: {
-    initials: $searchReposParams.map((params) => ({ q: params.q })),
-    onSubmit: searchReposFormSubmitted,
-  },
-});
+export const SearchReposForm = memo(
+  reflect({
+    view: SearchReposFormView,
+    bind: {
+      initial: searchReposParams.$query,
+      onSubmit: searchReposFormSubmitted,
+    },
+  }),
+);

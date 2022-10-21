@@ -4,12 +4,12 @@ import { memo } from 'react';
 import { Link } from '@/shared/components';
 import { notFoundRoute } from '@/shared/config/routes';
 
-type RepoCardHeaderProps = {
+type TRepoCardHeaderProps = {
   name: string;
   ownerName: string;
 };
 
-const RepoCardHeaderView = ({ name, ownerName }: RepoCardHeaderProps) => {
+const RepoCardHeaderView = ({ name, ownerName }: TRepoCardHeaderProps) => {
   return (
     <Card.Header css={{ py: 0 }}>
       <Link
