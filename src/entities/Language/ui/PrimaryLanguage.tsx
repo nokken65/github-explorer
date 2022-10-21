@@ -1,12 +1,9 @@
 import { Badge, Text } from '@nextui-org/react';
 import { memo } from 'react';
 
-import { Repository } from '@/shared/api/github';
+import { TLanguage } from '../model/models';
 
-type PrimaryLanguageProps = Pick<
-  NonNullable<Repository['primaryLanguage']>,
-  'color' | 'name'
->;
+type PrimaryLanguageProps = TLanguage;
 
 const PrimaryLanguageView = ({ name, color }: PrimaryLanguageProps) => {
   return (

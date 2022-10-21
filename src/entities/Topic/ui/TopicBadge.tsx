@@ -1,15 +1,16 @@
 import { Badge } from '@nextui-org/react';
 import { memo } from 'react';
 
-import { RepositoryTopic } from '@/shared/api/github';
 import { Link } from '@/shared/components';
+import { notFoundRoute } from '@/shared/config/routes';
 
-type TopicBadgeProps = Pick<RepositoryTopic['topic'], 'name'> &
-  Pick<RepositoryTopic, 'url'>;
+type TopicBadgeProps = {
+  name: string;
+};
 
-const TopicBadgeView = ({ name, url }: TopicBadgeProps) => {
+const TopicBadgeView = ({ name }: TopicBadgeProps) => {
   return (
-    <Link to={url}>
+    <Link to={notFoundRoute}>
       <Badge disableOutline color='primary' css={{ px: '$2', py: '$1' }}>
         {name}
       </Badge>

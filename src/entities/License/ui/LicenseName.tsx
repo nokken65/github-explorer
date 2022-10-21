@@ -1,9 +1,7 @@
 import { Text } from '@nextui-org/react';
 import { memo } from 'react';
 
-import { License } from '@/shared/api/github';
-
-type LicenseNameProps = Pick<License, 'name'>;
+type LicenseNameProps = { name: string };
 
 const LicenseNameView = ({ name }: LicenseNameProps) => {
   return (

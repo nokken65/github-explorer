@@ -7,7 +7,7 @@ import { homeRoute } from '@/shared/config/routes';
 
 const HeaderView = () => {
   return (
-    <Navbar isCompact shouldHideOnScroll variant='sticky' maxWidth='fluid'>
+    <Navbar isCompact shouldHideOnScroll maxWidth='fluid' variant='sticky'>
       <Navbar.Brand>
         <Link css={{ fontSize: '1.5rem', fontWeight: 'bold' }} to={homeRoute}>
           GExplorer

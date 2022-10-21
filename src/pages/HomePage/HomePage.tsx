@@ -1,7 +1,7 @@
-import { SearchRepositoryFeed } from '@/widgets/SearchRepositoriesFeed';
+import { SearchReposFeed } from '@/widgets/SearchReposFeed';
 
 const HomePage = () => {
-  return <SearchRepositoryFeed />;
+  return <SearchReposFeed />;
 };
 
 export default HomePage;
