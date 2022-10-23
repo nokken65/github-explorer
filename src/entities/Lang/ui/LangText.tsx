@@ -1,15 +1,17 @@
 import { Badge, Text } from '@nextui-org/react';
 import { memo } from 'react';
 
-import { TLanguage } from '../model/models';
+type TLangTextProps = {
+  name: string;
+  color?: string;
+};
 
-type TPrimaryLanguageProps = TLanguage;
-
-const PrimaryLanguageView = ({ name, color }: TPrimaryLanguageProps) => {
+const LangTextView = ({ name, color }: TLangTextProps) => {
   return (
     <Text
       css={{
         display: 'inline-flex',
+        flexWrap: 'nowrap',
         alignItems: 'center',
         gap: '$2',
         fontSize: '$sm',
@@ -27,4 +29,4 @@ const PrimaryLanguageView = ({ name, color }: TPrimaryLanguageProps) => {
   );
 };
 
-export const PrimaryLanguage = memo(PrimaryLanguageView);
+export const LangText = memo(LangTextView);

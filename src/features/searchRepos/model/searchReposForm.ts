@@ -11,4 +11,10 @@ sample({
   target: searchReposParams.$query,
 });
 
+sample({
+  clock: searchReposFormSubmitted,
+  fn: () => 1,
+  target: searchReposParams.$page,
+});
+
 export { searchReposFormSubmitted };

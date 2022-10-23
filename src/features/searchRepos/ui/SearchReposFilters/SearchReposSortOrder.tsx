@@ -1,4 +1,5 @@
 import { reflect } from '@effector/reflect';
+import { Container } from '@nextui-org/react';
 import { memo } from 'react';
 
 import { Button } from '@/shared/components';
@@ -9,23 +10,35 @@ import { TSearchReposParams } from '../../model/models';
 
 type TSearchReposSortOrderProps = {
   order: NonNullable<TSearchReposParams['order']>;
-  set: (order: NonNullable<TSearchReposParams['order']>) => void;
+  toggle: () => void;
 };
 
 const SearchReposSortOrderView = ({
   order,
-  set,
+  toggle,
 }: TSearchReposSortOrderProps) => {
   return (
     <Button
       auto
       flat
-      css={{
-        transform: `rotate(${order === 'desc' ? 180 : 0}deg);`,
-      }}
-      icon={<OrderIcon height='18px' width='18px' />}
+      icon={
+        <Container
+          css={{
+            display: 'flex',
+            p: 0,
+            m: 0,
+            minWidth: '2.5rem',
+            justifyContent: 'center',
+            alignItems: 'center',
+            transition: 'transform 0.25s ease 0s',
+            transform: `rotate(${order === 'desc' ? 180 : 0}deg);`,
+          }}
+        >
+          <OrderIcon height='18px' width='18px' />
+        </Container>
+      }
       ripple={false}
-      onPress={() => set(order === 'desc' ? 'asc' : 'desc')}
+      onPress={toggle}
     />
   );
 };
@@ -35,7 +48,7 @@ export const SearchReposSortOrder = memo(
     view: SearchReposSortOrderView,
     bind: {
       order: searchReposParams.$order,
-      set: searchReposParams.setOrder,
+      toggle: searchReposParams.toggleOrder,
     },
   }),
 );

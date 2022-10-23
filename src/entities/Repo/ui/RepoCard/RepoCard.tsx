@@ -9,12 +9,7 @@ type TRepoCardProps = PropsWithChildren;
 
 const RepoCard = ({ children }: TRepoCardProps) => {
   return (
-    <Card
-      isHoverable
-      as='li'
-      css={{ height: '100%', pt: '$xs', pb: '$sm' }}
-      variant='flat'
-    >
+    <Card as='li' css={{ height: '100%', pt: '$xs', pb: '$sm' }} variant='flat'>
       {children}
     </Card>
   );

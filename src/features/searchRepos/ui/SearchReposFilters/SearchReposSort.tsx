@@ -51,7 +51,6 @@ const SearchReposSortView = ({ sort, set }: TSearchReposSortProps) => {
       offset={0}
       placement='bottomEnd'
       shadow={false}
-      visible={true}
     >
       <Row css={{ alignItems: 'center' }}>
         <Button auto flat>

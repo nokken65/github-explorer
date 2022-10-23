@@ -15,7 +15,6 @@ const UpdatedAtTextView = ({ date }: TUpdatedAtTextProps) => {
       css={{
         fontSize: '$sm',
         whiteSpace: 'nowrap',
-        ml: 'auto',
       }}
     >
       {formattedDate}

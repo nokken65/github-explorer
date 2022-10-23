@@ -2,9 +2,10 @@ import { z } from 'zod';
 
 import { githubApi } from '@/shared/api';
 
-import { searchReposSchema } from '../validation';
+import { searchReposSchema, selectLangsSchema } from '../validation';
 
 export type TSearchReposFormInputs = z.infer<typeof searchReposSchema>;
+export type TSelectLangsFormInputs = z.infer<typeof selectLangsSchema>;
 
 export type TSearchReposParams =
   githubApi.schema.operations['search/repos']['parameters']['query'];

@@ -19,7 +19,7 @@ const SearchReposPaginationView = ({
 }: TSearchReposPaginationProps) => {
   const handleChangePage = useCallback((newPage: number) => {
     set(newPage);
-    // window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
   }, []);
 
   return (
@@ -27,7 +27,9 @@ const SearchReposPaginationView = ({
       <Pagination
         noMargin
         as='ul'
+        controls={false}
         initialPage={page}
+        page={page}
         total={total}
         onChange={handleChangePage}
       />

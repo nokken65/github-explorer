@@ -1,8 +1,9 @@
 import { list, reflect } from '@effector/reflect';
-import { Grid, Progress, Spacer } from '@nextui-org/react';
+import { Grid, Progress } from '@nextui-org/react';
 import { useUnit } from 'effector-react';
 
-import { languageModel, PrimaryLanguage } from '@/entities/Language';
+import { IssuesCount } from '@/entities/Issues';
+import { langModel, LangText } from '@/entities/Lang';
 import { LicenseName } from '@/entities/License';
 import { RepoCard } from '@/entities/Repo';
 import { StargazersCount } from '@/entities/Stargazer';
@@ -10,17 +11,16 @@ import { UpdatedAtText } from '@/entities/Time';
 import { TopicBadge } from '@/entities/Topic';
 import {
   SearchReposEmpty,
+  SearchReposFilters,
   SearchReposForm,
   searchReposModel,
   SearchReposPagination,
-  SearchReposSort,
-  SearchReposSortOrder,
   TSearchReposResultData,
 } from '@/features/searchRepos';
 import { Column, Row } from '@/shared/components';
 
 const SearchReposListItem = (repo: TSearchReposResultData['items'][number]) => {
-  const colors = useUnit(languageModel.$languagesColors);
+  const langs = useUnit(langModel.$langs);
 
   return (
     <RepoCard key={repo.id}>
@@ -38,13 +38,28 @@ const SearchReposListItem = (repo: TSearchReposResultData['items'][number]) => {
           <Row css={{ flexWrap: 'nowrap' }}>
             <StargazersCount count={repo.stargazers_count} />
             {repo.language && (
-              <PrimaryLanguage
-                color={colors[repo.language] ?? null}
+              <LangText
+                color={langs[repo.language]?.color ?? null}
                 name={repo.language}
               />
             )}
             {repo.license && <LicenseName name={repo.license.name} />}
-            <UpdatedAtText date={new Date(repo.pushed_at)} />
+            <Row
+              css={{
+                width: 'fit-content',
+                display: 'inline-flex',
+                ml: 'auto',
+                flexWrap: 'nowrap',
+              }}
+            >
+              {repo.open_issues > 0 && (
+                <IssuesCount
+                  count={repo.open_issues}
+                  hasIssues={repo.has_issues}
+                />
+              )}
+              <UpdatedAtText date={new Date(repo.updated_at)} />
+            </Row>
           </Row>
         </Column>
       </RepoCard.Footer>
@@ -58,16 +73,28 @@ const SearchReposList = list({
   getKey: ({ id }) => id,
 });
 
-const SearchReposListWithContainer = () => {
+const SearchReposListWithContainer = ({
+  isLoading,
+}: {
+  isLoading: boolean;
+}) => {
   return (
     <Column
       css={{
         flexGrow: 1,
         justifyContent: 'space-between',
         gap: '$xl',
+        position: 'relative',
       }}
     >
-      <SearchReposPagination />
+      {isLoading && (
+        <Progress
+          indeterminated
+          css={{ position: 'absolute', top: '-10px' }}
+          size='xs'
+        />
+      )}
+
       <Grid
         as='ul'
         css={{
@@ -84,6 +111,7 @@ const SearchReposListWithContainer = () => {
       >
         <SearchReposList />
       </Grid>
+      <SearchReposPagination />
     </Column>
   );
 };
@@ -101,28 +129,17 @@ const SearchReposFeedView = ({
     <Column
       css={{
         flexGrow: 1,
-        position: 'relative',
       }}
     >
-      {isLoading && (
-        <Progress
-          indeterminated
-          css={{ position: 'absolute', top: '70px' }}
-          size='xs'
-        />
-      )}
-
       <SearchReposForm />
 
-      <Spacer />
+      <SearchReposFilters />
 
-      <Row css={{ justifyContent: 'space-between' }}>
-        <Spacer css={{ mr: 'auto' }} />
-        <SearchReposSort />
-        <SearchReposSortOrder />
-      </Row>
-
-      {isEmpty ? <SearchReposEmpty /> : <SearchReposListWithContainer />}
+      {isEmpty ? (
+        <SearchReposEmpty />
+      ) : (
+        <SearchReposListWithContainer isLoading={isLoading} />
+      )}
     </Column>
   );
 };
@@ -134,6 +151,6 @@ export const SearchReposFeed = reflect({
     isEmpty: searchReposModel.$searchedReposIsEmpty,
   },
   hooks: {
-    mounted: () => languageModel.loadLanguagesColorsFx(),
+    mounted: () => langModel.loadLangsFx(),
   },
 });
