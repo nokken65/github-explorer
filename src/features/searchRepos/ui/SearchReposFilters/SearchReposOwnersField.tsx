@@ -10,6 +10,7 @@ const SearchReposOwnersFieldView = () => {
         block
         accepter={TagInput}
         name='owners'
+        placeholder='github, atom, electron...'
         trigger={['Enter', 'Space', 'Comma']}
       />
     </Form.Group>
