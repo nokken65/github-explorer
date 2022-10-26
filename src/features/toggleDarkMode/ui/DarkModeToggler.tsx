@@ -1,7 +1,7 @@
 import { reflect } from '@effector/reflect';
+import { IconButton } from 'rsuite';
 
 import { darkModeModel } from '@/entities/DarkMode';
-import { Button } from '@/shared/components';
 import { ReactComponent as DarkIcon } from '@/shared/icons/dark-icon.svg';
 import { ReactComponent as LightIcon } from '@/shared/icons/light-icon.svg';
 
@@ -15,19 +15,10 @@ const DarkModeTogglerView = ({
   toggleDarkMode,
 }: TDarkModeTogglerProps) => {
   return (
-    <Button
-      auto
-      light
-      animated={false}
-      icon={
-        isDarkMode ? (
-          <DarkIcon height='18px' width='18px' />
-        ) : (
-          <LightIcon height='18px' width='18px' />
-        )
-      }
-      ripple={false}
-      onPress={toggleDarkMode}
+    <IconButton
+      appearance='subtle'
+      icon={isDarkMode ? <DarkIcon /> : <LightIcon />}
+      onClick={toggleDarkMode}
     />
   );
 };
@@ -36,6 +27,6 @@ export const DarkModeToggler = reflect({
   view: DarkModeTogglerView,
   bind: {
     isDarkMode: darkModeModel.$isDarkMode,
-    toggleDarkMode: darkModeModel.toggleDarkMode,
+    toggleDarkMode: darkModeModel.darkModeToggled,
   },
 });

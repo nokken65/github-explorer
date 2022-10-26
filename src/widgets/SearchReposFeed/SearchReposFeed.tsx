@@ -1,33 +1,26 @@
 import { list, reflect } from '@effector/reflect';
-import { Grid, Progress } from '@nextui-org/react';
-import { useUnit } from 'effector-react';
+import { Container, Loader } from 'rsuite';
 
-import { IssuesCount } from '@/entities/Issues';
-import { langModel, LangText } from '@/entities/Lang';
-import { LicenseName } from '@/entities/License';
+import { langModel } from '@/entities/Lang';
+// import { useUnit } from 'effector-react';
+// import { langModel } from '@/entities/Lang';
 import { RepoCard } from '@/entities/Repo';
-import { StargazersCount } from '@/entities/Stargazer';
-import { UpdatedAtText } from '@/entities/Time';
-import { TopicBadge } from '@/entities/Topic';
 import {
   SearchReposEmpty,
-  SearchReposFilters,
   SearchReposForm,
   searchReposModel,
-  SearchReposPagination,
   TSearchReposResultData,
 } from '@/features/searchRepos';
-import { Column, Row } from '@/shared/components';
 
 const SearchReposListItem = (repo: TSearchReposResultData['items'][number]) => {
-  const langs = useUnit(langModel.$langs);
+  // const langs = useUnit(langModel.$langs);
 
   return (
     <RepoCard key={repo.id}>
       <RepoCard.Header name={repo.name} ownerName={repo.owner?.login ?? ''} />
       {repo.description && <RepoCard.Body description={repo.description} />}
       <RepoCard.Footer>
-        <Column>
+        {/* <Column>
           {!!repo.topics?.length && (
             <Row css={{ gap: '$2' }}>
               {repo.topics.map((topic) => (
@@ -61,7 +54,7 @@ const SearchReposListItem = (repo: TSearchReposResultData['items'][number]) => {
               <UpdatedAtText date={new Date(repo.updated_at)} />
             </Row>
           </Row>
-        </Column>
+        </Column> */}
       </RepoCard.Footer>
     </RepoCard>
   );
@@ -79,40 +72,40 @@ const SearchReposListWithContainer = ({
   isLoading: boolean;
 }) => {
   return (
-    <Column
-      css={{
-        flexGrow: 1,
-        justifyContent: 'space-between',
-        gap: '$xl',
-        position: 'relative',
-      }}
-    >
-      {isLoading && (
-        <Progress
-          indeterminated
-          css={{ position: 'absolute', top: '-10px' }}
-          size='xs'
-        />
-      )}
+    // <Column
+    //   css={{
+    //     flexGrow: 1,
+    //     justifyContent: 'space-between',
+    //     gap: '$xl',
+    //     position: 'relative',
+    //   }}
+    // >
+    //   {isLoading && (
+    //     <Progress
+    //       indeterminated
+    //       css={{ position: 'absolute', top: '-10px' }}
+    //       size='xs'
+    //     />
+    //   )}
 
-      <Grid
-        as='ul'
-        css={{
-          display: 'grid',
+    //   <Grid
+    //     as='ul'
+    //     css={{
+    //       display: 'grid',
 
-          '@mdMax': {
-            gap: '$4',
-          },
-          '@mdMin': {
-            gap: '$8',
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr));',
-          },
-        }}
-      >
-        <SearchReposList />
-      </Grid>
-      <SearchReposPagination />
-    </Column>
+    //       '@mdMax': {
+    //         gap: '$4',
+    //       },
+    //       '@mdMin': {
+    //         gap: '$8',
+    //         gridTemplateColumns: 'repeat(3, minmax(0, 1fr));',
+    //       },
+    //     }}
+    //   >
+    <SearchReposList />
+    //</Grid>
+    //<SearchReposPagination />
+    //</Column>
   );
 };
 
@@ -126,21 +119,16 @@ const SearchReposFeedView = ({
   isEmpty,
 }: TSearchReposFeedViewProps) => {
   return (
-    <Column
-      css={{
-        flexGrow: 1,
-      }}
-    >
+    <Container className='flex w-full flex-col gap-6'>
       <SearchReposForm />
-
-      <SearchReposFilters />
-
+      {/* <SearchReposFilters /> */}
+      {isLoading && <Loader size='sm' />}
       {isEmpty ? (
         <SearchReposEmpty />
       ) : (
         <SearchReposListWithContainer isLoading={isLoading} />
       )}
-    </Column>
+    </Container>
   );
 };
 

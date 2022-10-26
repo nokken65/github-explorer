@@ -1,12 +1,10 @@
-import { Card } from '@nextui-org/react';
 import { memo, PropsWithChildren } from 'react';
+import { Container } from 'rsuite';
 
 type TRepoCardFooterProps = PropsWithChildren;
 
 const RepoCardFooterView = ({ children }: TRepoCardFooterProps) => {
-  return (
-    <Card.Footer css={{ pt: '$xs', pb: 0, mt: 'auto' }}>{children}</Card.Footer>
-  );
+  return <Container>{children}</Container>;
 };
 
 export const RepoCardFooter = memo(RepoCardFooterView);

@@ -1,22 +1,16 @@
-import { Container, Text } from '@nextui-org/react';
-
-import { Link } from '@/shared/components';
+import { Link } from 'atomic-router-react';
+import { Footer as RSFooter } from 'rsuite';
 
 const Footer = () => {
   return (
-    <Container
-      as='footer'
-      css={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '$xs',
-      }}
-    >
-      <Text>Powered with ❤️ from</Text>
-      <Link rel='noreferrer' target='_blank' to='https://github.com/nokken65'>
-        nokken65
-      </Link>
-    </Container>
+    <RSFooter className='flex justify-center py-4'>
+      <p>
+        Powered with ❤️ from{' '}
+        <Link rel='noreferrer' target='_blank' to='https://github.com/nokken65'>
+          nokken65
+        </Link>
+      </p>
+    </RSFooter>
   );
 };
 

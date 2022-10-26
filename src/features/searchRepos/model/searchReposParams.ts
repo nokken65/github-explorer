@@ -1,26 +1,39 @@
 import { combine, createEvent, createStore, sample } from 'effector';
-import pickBy from 'lodash.pickby';
+import { debounce } from 'patronum/debounce';
 
 import { searchRepos } from '../api';
 import { TSearchReposParams } from './models';
 
 const $query = createStore<TSearchReposParams['q']>('');
-const $perPage = createStore<NonNullable<TSearchReposParams['per_page']>>(21);
-const $order = createStore<NonNullable<TSearchReposParams['order']>>('desc');
-const $sort = createStore<NonNullable<TSearchReposParams['sort']>>('stars');
-const $page = createStore<NonNullable<TSearchReposParams['page']>>(1);
-const $langs = createStore<string[]>([]);
+const setQuery = createEvent<string>();
+$query.on(setQuery, (_, payload) => payload);
 
+const $perPage = createStore<NonNullable<TSearchReposParams['per_page']>>(21);
+
+const $page = createStore<NonNullable<TSearchReposParams['page']>>(1);
+$page.reset(setQuery);
+
+const $order = createStore<NonNullable<TSearchReposParams['order']>>('desc');
 const toggleOrder = createEvent();
 $order.on(toggleOrder, (state) => (state === 'asc' ? 'desc' : 'asc'));
 
+const $sort = createStore<NonNullable<TSearchReposParams['sort']>>('stars');
 const setSort = createEvent<NonNullable<TSearchReposParams['sort']>>();
 $sort.on(setSort, (_, payload) => payload);
 
+const $langs = createStore<string[]>([]);
 const addLang = createEvent<string>();
 const removeLang = createEvent<string>();
 $langs.on(addLang, (state, payload) => [...new Set([...state, payload])]);
 $langs.on(removeLang, (state, payload) =>
+  state.filter((item) => item !== payload),
+);
+
+const $owners = createStore<string[]>([]);
+const addOwner = createEvent<string>();
+const removeOwner = createEvent<string>();
+$owners.on(addOwner, (state, payload) => [...new Set([...state, payload])]);
+$owners.on(removeOwner, (state, payload) =>
   state.filter((item) => item !== payload),
 );
 
@@ -32,31 +45,32 @@ const $all = combine(
     sort: $sort,
     page: $page,
     langs: $langs,
+    owners: $owners,
   },
   (params) => params,
 );
 
 sample({
-  clock: $all,
-  filter: ({ q }) => q.length > 0,
+  clock: debounce({ source: $all, timeout: 500 }),
   fn: (all) => {
-    const params: Partial<TSearchReposParams> = {};
+    const params: TSearchReposParams = { q: '' };
 
-    params.order = all.order;
     params.page = all.page;
     params.per_page = all.per_page;
     params.sort = all.sort;
-    const queryLangs =
-      all.langs.length === 0
-        ? ''
-        : all.langs.reduce((q, lang) => `${q} language:"${lang}"`, '');
-    params.q = all.q + queryLangs;
+    params.order = all.order;
 
-    const filteredParams = pickBy<TSearchReposParams>(params, (value) =>
-      Boolean(value),
-    ) as TSearchReposParams;
+    const queryLangs = Boolean(all.langs.length)
+      ? all.langs.reduce((q, lang) => `${q} language:"${lang}"`, '')
+      : '';
 
-    return filteredParams;
+    const queryOwners = Boolean(all.owners.length)
+      ? all.owners.reduce((q, owner) => `${q} language:"${owner}"`, '')
+      : '';
+
+    params.q = all.q + queryLangs + queryOwners;
+
+    return params;
   },
   target: searchRepos.start,
 });
@@ -68,9 +82,13 @@ export const searchReposParams = {
   $sort,
   $page,
   $langs,
+  $owners,
   $all,
   toggleOrder,
   setSort,
   addLang,
   removeLang,
+  addOwner,
+  removeOwner,
+  setQuery,
 };

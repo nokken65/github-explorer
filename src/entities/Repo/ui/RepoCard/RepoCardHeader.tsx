@@ -1,7 +1,7 @@
-import { Card, Text } from '@nextui-org/react';
+import { Link } from 'atomic-router-react';
 import { memo } from 'react';
+import { Container } from 'rsuite';
 
-import { Link } from '@/shared/components';
 import { notFoundRoute } from '@/shared/config/routes';
 
 type TRepoCardHeaderProps = {
@@ -11,43 +11,11 @@ type TRepoCardHeaderProps = {
 
 const RepoCardHeaderView = ({ name, ownerName }: TRepoCardHeaderProps) => {
   return (
-    <Card.Header css={{ py: 0 }}>
-      <Link
-        underline
-        css={{
-          overflow: 'hidden',
-        }}
-        to={notFoundRoute}
-      >
-        <Text
-          css={{
-            fontSize: '$xl',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {ownerName}
-        </Text>
-        <Text
-          css={{
-            fontSize: '$xl',
-          }}
-        >
-          /
-        </Text>
-        <Text
-          color='primary'
-          css={{
-            fontSize: '$xl',
-            fontWeight: '$bold',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {name}
-        </Text>
+    <Container>
+      <Link to={notFoundRoute}>
+        {ownerName}/{name}
       </Link>
-    </Card.Header>
+    </Container>
   );
 };
 

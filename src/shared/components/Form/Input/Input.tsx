@@ -1,22 +1,23 @@
-import {
-  Input as NextUIInput,
-  InputProps as NextUIInputProps,
-  SimpleColors,
-  StyledInput,
-  StyledInputContainer,
-} from '@nextui-org/react';
+import { ReactNode } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
+import {
+  type FormControlProps as RSFormControlProps,
+  Form,
+  InputGroup,
+} from 'rsuite';
 
 import { genericMemo } from '@/shared/types';
 
-type InputProps<T> = Omit<Partial<NextUIInputProps>, 'name'> & {
+type InputProps<T> = Omit<Partial<RSFormControlProps>, 'name'> & {
   name: Path<T>;
+  before?: ReactNode;
+  after?: ReactNode;
 };
 
 const InputView = function <T>({
   name,
-  contentRightStyling = false,
-  css,
+  before,
+  after,
   ...props
 }: InputProps<T>) {
   const { control } = useFormContext();
@@ -25,35 +26,24 @@ const InputView = function <T>({
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState }) => {
-        const statusColor: SimpleColors =
-          fieldState.isDirty && fieldState.error?.message ? 'error' : 'default';
-
-        return (
-          <NextUIInput
-            fullWidth
-            aria-label='hidden'
-            color={statusColor}
-            contentRightStyling={contentRightStyling || false}
-            css={{
-              ...css,
-              [`& ${StyledInput}`]: {
-                fontSize: '1rem',
-              },
-              [`& ${StyledInputContainer}`]: {
-                transform: 'unset',
-              },
-            }}
-            helperColor={statusColor}
-            helperText={fieldState.error?.message}
-            status={statusColor}
+      render={({ field, fieldState }) => (
+        <InputGroup inside>
+          {before && (
+            <InputGroup.Addon className='!p-0'>{before}</InputGroup.Addon>
+          )}
+          <Form.Control
+            errorMessage={fieldState.error?.message}
+            errorPlacement='topStart'
             {...props}
             {...field}
-            value={field.value || ''}
-            // onChange={(e) => input.onChange(e.type === 'click' ? '' : e)}
           />
-        );
-      }}
+          {after && (
+            <InputGroup.Addon className='flex h-full -mr-[1px] !p-0'>
+              {after}
+            </InputGroup.Addon>
+          )}
+        </InputGroup>
+      )}
     />
   );
 };

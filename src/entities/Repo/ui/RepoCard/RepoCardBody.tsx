@@ -1,5 +1,5 @@
-import { Card, Text } from '@nextui-org/react';
 import { memo } from 'react';
+import { Container } from 'rsuite';
 
 type TRepoCardBodyProps = {
   description: string;
@@ -7,9 +7,9 @@ type TRepoCardBodyProps = {
 
 const RepoCardBodyView = ({ description }: TRepoCardBodyProps) => {
   return (
-    <Card.Body css={{ overflowY: 'visible', py: 0 }}>
-      <Text>{description}</Text>
-    </Card.Body>
+    <Container>
+      <p>{description}</p>
+    </Container>
   );
 };
 

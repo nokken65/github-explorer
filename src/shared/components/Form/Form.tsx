@@ -1,9 +1,10 @@
-import { FormHTMLAttributes, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
+import { type FormProps as RSFormProps, Form as RSForm } from 'rsuite';
 
 import { Input } from './Input';
 
-type FormProps<T extends FieldValues> = FormHTMLAttributes<HTMLFormElement> & {
+type FormProps<T extends FieldValues> = RSFormProps & {
   methods: UseFormReturn<T>;
   resetOnSubmit?: boolean;
 };
@@ -22,9 +23,9 @@ const Form = function <T extends FieldValues>({
 
   return (
     <FormProvider {...methods}>
-      <form noValidate {...props}>
+      <RSForm noValidate {...props}>
         {children}
-      </form>
+      </RSForm>
     </FormProvider>
   );
 };

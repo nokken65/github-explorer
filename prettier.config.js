@@ -1,11 +1,13 @@
 module.exports = {
   printWidth: 80,
-  endOfLine: "lf",
+  endOfLine: 'lf',
   jsxSingleQuote: true,
   semi: true,
   useTabs: false,
   tabWidth: 2,
-  trailingComma: "all",
+  trailingComma: 'all',
   singleQuote: true,
-  arrowParens: "always",
-}
+  arrowParens: 'always',
+  tailwindConfig: './tailwind.config.js',
+  plugins: [require('prettier-plugin-tailwindcss')],
+};

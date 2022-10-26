@@ -1,5 +1,5 @@
-import { Card } from '@nextui-org/react';
 import { PropsWithChildren } from 'react';
+import { Panel } from 'rsuite';
 
 import { RepoCardBody } from './RepoCardBody';
 import { RepoCardFooter } from './RepoCardFooter';
@@ -8,11 +8,7 @@ import { RepoCardHeader } from './RepoCardHeader';
 type TRepoCardProps = PropsWithChildren;
 
 const RepoCard = ({ children }: TRepoCardProps) => {
-  return (
-    <Card as='li' css={{ height: '100%', pt: '$xs', pb: '$sm' }} variant='flat'>
-      {children}
-    </Card>
-  );
+  return <Panel shaded>{children}</Panel>;
 };
 
 RepoCard.Header = RepoCardHeader;

@@ -1,13 +1,13 @@
 import { createEvent, createStore } from 'effector';
 import { persist } from 'effector-storage/local';
 
-const toggleDarkMode = createEvent<void>();
+const darkModeToggled = createEvent();
 
 const $isDarkMode = createStore<boolean>(false).on(
-  toggleDarkMode,
+  darkModeToggled,
   (state) => !state,
 );
 
 persist({ store: $isDarkMode, key: 'dark-mode' });
 
-export { $isDarkMode, toggleDarkMode };
+export { $isDarkMode, darkModeToggled };

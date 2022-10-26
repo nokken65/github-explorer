@@ -1,7 +1,7 @@
-import { Badge } from '@nextui-org/react';
+import { Link } from 'atomic-router-react';
 import { memo } from 'react';
+import { Tag } from 'rsuite';
 
-import { Link } from '@/shared/components';
 import { notFoundRoute } from '@/shared/config/routes';
 
 type TTopicBadgeProps = {
@@ -11,9 +11,7 @@ type TTopicBadgeProps = {
 const TopicBadgeView = ({ name }: TTopicBadgeProps) => {
   return (
     <Link to={notFoundRoute}>
-      <Badge disableOutline color='primary' css={{ px: '$2', py: '$1' }}>
-        {name}
-      </Badge>
+      <Tag>{name}</Tag>
     </Link>
   );
 };

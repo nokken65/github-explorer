@@ -1,3 +1,5 @@
+import '@/shared/styles/index.less';
+
 import { Routing } from '@/pages';
 
 import { withProviders } from './providers';

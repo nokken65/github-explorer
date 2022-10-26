@@ -1,5 +1,42 @@
-import { object, string } from 'zod';
+import { Schema } from 'rsuite';
 
-export const searchReposSchema = object({
-  q: string().max(10, 'Too long query!'),
+import { Paths } from '@/shared/types';
+
+import {
+  SEARCH_REPOS_OPERATORS,
+  SEARCH_REPOS_SORT,
+  SEARCH_REPOS_SORT_ORDER,
+  TSearchReposFormInputs,
+} from '../model/models';
+
+export const searchReposSchemaModel = Schema.Model<
+  Record<Paths<TSearchReposFormInputs>, unknown>
+>({
+  query: Schema.Types.StringType().maxLength(10, 'Too long query!'),
+
+  sort: Schema.Types.StringType().isOneOf([...SEARCH_REPOS_SORT]),
+
+  order: Schema.Types.StringType().isOneOf([...SEARCH_REPOS_SORT_ORDER]),
+
+  langs: Schema.Types.ArrayType().of(
+    Schema.Types.StringType().maxLength(30, 'Too long language name!'),
+  ),
+
+  owners: Schema.Types.ArrayType().of(
+    Schema.Types.StringType().maxLength(30, 'Too long owner name!'),
+  ),
+
+  stars: Schema.Types.ObjectType(),
+  'stars.operator': Schema.Types.StringType().isOneOf([
+    ...SEARCH_REPOS_OPERATORS,
+  ]),
+  'stars.from': Schema.Types.NumberType().isInteger().min(0),
+  'stars.to': Schema.Types.NumberType().isInteger().min(0),
+
+  forks: Schema.Types.ObjectType(),
+  'forks.operator': Schema.Types.StringType().isOneOf([
+    ...SEARCH_REPOS_OPERATORS,
+  ]),
+  'forks.from': Schema.Types.NumberType().isInteger().min(0),
+  'forks.to': Schema.Types.NumberType().isInteger().min(0),
 });
