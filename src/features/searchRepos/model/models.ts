@@ -8,13 +8,13 @@ export type TSearchReposFormInputs = {
   owners: string[];
   stars: {
     operator: typeof SEARCH_REPOS_OPERATORS[number];
-    from?: number;
-    to?: number;
+    from?: string;
+    to?: string;
   };
   forks: {
     operator: typeof SEARCH_REPOS_OPERATORS[number];
-    from?: number;
-    to?: number;
+    from?: string;
+    to?: string;
   };
 };
 

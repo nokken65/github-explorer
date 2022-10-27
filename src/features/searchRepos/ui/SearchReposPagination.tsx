@@ -1,39 +1,43 @@
 import { reflect } from '@effector/reflect';
-import { Pagination } from '@nextui-org/react';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
+import { Pagination } from 'rsuite';
 
-import { Row } from '@/shared/components';
-
-import { $totalPages, searchReposParams, setPage } from '../model';
+import { searchRepos } from '../api';
+import { searchReposPagination } from '../model';
 
 type TSearchReposPaginationProps = {
   page: number;
+  perPage: number;
   total: number;
+  isDisabled: boolean;
   set: (page: number) => void;
 };
 
 const SearchReposPaginationView = ({
   page,
+  perPage,
   total,
+  isDisabled,
   set,
 }: TSearchReposPaginationProps) => {
-  const handleChangePage = useCallback((newPage: number) => {
+  const handleChange = (newPage: number) => {
     set(newPage);
     window.scrollTo({ top: 0 });
-  }, []);
+  };
 
   return (
-    <Row css={{ justifyContent: 'center' }}>
-      <Pagination
-        noMargin
-        as='ul'
-        controls={false}
-        initialPage={page}
-        page={page}
-        total={total}
-        onChange={handleChangePage}
-      />
-    </Row>
+    <Pagination
+      boundaryLinks
+      ellipsis
+      activePage={page}
+      className='justify-center'
+      disabled={isDisabled}
+      limit={perPage}
+      maxButtons={10}
+      size='sm'
+      total={total}
+      onChangePage={handleChange}
+    />
   );
 };
 
@@ -41,9 +45,11 @@ export const SearchReposPagination = memo(
   reflect({
     view: SearchReposPaginationView,
     bind: {
-      page: searchReposParams.$page,
-      total: $totalPages,
-      set: setPage,
+      page: searchReposPagination.$page,
+      perPage: searchReposPagination.$perPage,
+      total: searchReposPagination.$total,
+      isDisabled: searchRepos.$pending,
+      set: searchReposPagination.pageSetted,
     },
   }),
 );

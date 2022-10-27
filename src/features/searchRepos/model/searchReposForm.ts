@@ -1,41 +1,48 @@
-import { createEvent, createStore, sample } from 'effector';
+import { combine, createEvent, createStore } from 'effector';
+import { spread } from 'patronum';
 
 import { TSearchReposFormInputs } from './models';
+import { searchReposFilters } from './searchReposFilters';
 
 const formSubmitted = createEvent();
 
 const queryResetted = createEvent();
+const $query =
+  createStore<TSearchReposFormInputs['query']>('').reset(queryResetted);
+
+const $hasCancelButton = $query.map((query) => query.length > 0);
+
 const valuesSetted = createEvent<TSearchReposFormInputs>();
-
-const $values = createStore<TSearchReposFormInputs>({
-  query: '',
-  sort: 'stars',
-  order: 'desc',
-  langs: [],
-  owners: [],
-  stars: {
-    operator: '>',
+const $values = combine(
+  {
+    query: $query,
+    sort: searchReposFilters.$sort,
+    order: searchReposFilters.$order,
+    langs: searchReposFilters.$langs,
+    owners: searchReposFilters.$owners,
+    stars: searchReposFilters.$stars,
+    forks: searchReposFilters.$forks,
   },
-  forks: {
-    operator: '>',
-  },
-});
-$values.on(valuesSetted, (_, payload) => payload);
-
-const $hasQueryFieldCancelBtn = $values.map(
-  (values) => values.query.length > 0,
+  (all) => all,
 );
 
-sample({
-  clock: queryResetted,
-  source: $values,
-  fn: (values) => ({ ...values, query: '' }),
-  target: $values,
+spread({
+  source: valuesSetted,
+  targets: {
+    query: $query,
+    sort: searchReposFilters.$sort,
+    order: searchReposFilters.$order,
+    langs: searchReposFilters.$langs,
+    owners: searchReposFilters.$owners,
+    stars: searchReposFilters.$stars,
+    forks: searchReposFilters.$forks,
+  },
 });
 
 export const searchReposForm = {
+  $query,
   $values,
-  $hasQueryFieldCancelBtn,
+  $hasCancelButton,
   formSubmitted,
   valuesSetted,
   queryResetted,

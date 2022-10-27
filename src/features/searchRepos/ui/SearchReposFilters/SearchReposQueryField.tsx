@@ -57,7 +57,7 @@ export const SearchReposQueryField = memo(
   reflect({
     view: SearchReposQueryFieldView,
     bind: {
-      hasCancel: searchReposForm.$hasQueryFieldCancelBtn,
+      hasCancel: searchReposForm.$hasCancelButton,
       reset: searchReposForm.queryResetted,
     },
   }),

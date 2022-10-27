@@ -30,13 +30,13 @@ export const searchReposSchemaModel = Schema.Model<
   'stars.operator': Schema.Types.StringType().isOneOf([
     ...SEARCH_REPOS_OPERATORS,
   ]),
-  'stars.from': Schema.Types.NumberType().isInteger().min(0),
-  'stars.to': Schema.Types.NumberType().isInteger().min(0),
+  'stars.from': Schema.Types.NumberType().isInteger().min(0, 'Must be > 0!'),
+  'stars.to': Schema.Types.NumberType().isInteger().min(0, 'Must be > 0!'),
 
   forks: Schema.Types.ObjectType(),
   'forks.operator': Schema.Types.StringType().isOneOf([
     ...SEARCH_REPOS_OPERATORS,
   ]),
-  'forks.from': Schema.Types.NumberType().isInteger().min(0),
-  'forks.to': Schema.Types.NumberType().isInteger().min(0),
+  'forks.from': Schema.Types.NumberType().isInteger().min(0, 'Must be > 0!'),
+  'forks.to': Schema.Types.NumberType().isInteger().min(0, 'Must be > 0!'),
 });

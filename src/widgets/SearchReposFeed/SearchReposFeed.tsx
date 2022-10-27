@@ -9,6 +9,7 @@ import {
   SearchReposEmpty,
   SearchReposForm,
   searchReposModel,
+  SearchReposPagination,
   TSearchReposResultData,
 } from '@/features/searchRepos';
 
@@ -102,7 +103,10 @@ const SearchReposListWithContainer = ({
     //       },
     //     }}
     //   >
-    <SearchReposList />
+    <>
+      <SearchReposList />
+      <SearchReposPagination />
+    </>
     //</Grid>
     //<SearchReposPagination />
     //</Column>

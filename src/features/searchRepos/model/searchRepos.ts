@@ -1,9 +1,10 @@
 import { sample } from 'effector';
-import { debounce } from 'patronum';
 
 import { searchRepos } from '../api';
 import { TSearchReposParams } from './models';
+import { searchReposFilters } from './searchReposFilters';
 import { searchReposForm } from './searchReposForm';
+import { searchReposPagination } from './searchReposPagination';
 
 const $searchedRepos = searchRepos.$data.map((data) => data?.items ?? []);
 
@@ -15,15 +16,24 @@ const $searchedReposIsLoading = searchRepos.$pending;
 
 sample({
   clock: [
-    debounce({ source: searchReposForm.$values, timeout: 500 }),
     searchReposForm.formSubmitted,
+    searchReposFilters.$sort,
+    searchReposFilters.$order,
+    searchReposPagination.$page,
   ],
-  source: searchReposForm.$values,
-  fn: (values) => {
+  source: {
+    values: searchReposForm.$values,
+    query: searchReposForm.$query,
+    page: searchReposPagination.$page,
+    perPage: searchReposPagination.$perPage,
+  },
+  filter: ({ query }) => query.length > 0,
+  fn: ({ values, page, perPage }) => {
     const params: TSearchReposParams = { q: '' };
 
-    params.page = 1;
-    params.per_page = 21;
+    params.page = page;
+    params.per_page = perPage;
+
     params.sort = values.sort;
     params.order = values.order;
 
@@ -35,13 +45,13 @@ sample({
       ? values.owners.reduce((q, owner) => `${q} user:"${owner}"`, '')
       : '';
 
-    const queryStars = Boolean(values.stars.to)
+    const queryStars = Boolean(parseInt(values.stars.to ?? '', 10))
       ? ` stars:${values.stars.operator === '..' ? values.stars.from : ''}${
           values.stars.operator
         }${values.stars.to}`
       : '';
 
-    const queryForks = Boolean(values.forks.to)
+    const queryForks = Boolean(parseInt(values.forks.to ?? '', 10))
       ? ` forks:${values.forks.operator === '..' ? values.forks.from : ''}${
           values.forks.operator
         }${values.forks.to}`

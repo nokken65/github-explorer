@@ -1,6 +1,6 @@
 import { reflect } from '@effector/reflect';
 import { memo, useMemo } from 'react';
-import { Badge, FlexboxGrid, Form, TagPicker } from 'rsuite';
+import { Badge, Container, Form, TagPicker } from 'rsuite';
 
 import { langModel, TRecordLangs } from '@/entities/Lang';
 
@@ -30,18 +30,21 @@ const SearchReposLangsFieldView = ({ langs }: TSearchReposLangsFieldProps) => {
         name='langs'
         placeholder='C++, Java, JavaScript...'
         renderMenuItem={(label, item) => (
-          <FlexboxGrid
-            align='middle'
-            className='flex-nowrap'
-            justify='space-between'
-          >
+          <Container className='flex-row flex-nowrap items-center justify-between'>
             <p className='overflow-hidden text-ellipsis whitespace-nowrap'>
               {label}
             </p>
             {item.color && (
-              <Badge style={{ minWidth: '8px', background: item.color }} />
+              <Badge
+                style={{
+                  borderRadius: '50%',
+                  minWidth: '12px',
+                  minHeight: '12px',
+                  background: item.color,
+                }}
+              />
             )}
-          </FlexboxGrid>
+          </Container>
         )}
       />
     </Form.Group>
