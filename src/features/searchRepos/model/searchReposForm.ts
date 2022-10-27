@@ -22,6 +22,8 @@ const $values = combine(
     owners: searchReposFilters.$owners,
     stars: searchReposFilters.$stars,
     forks: searchReposFilters.$forks,
+    pushedTo: searchReposFilters.$pushedTo,
+    createdAt: searchReposFilters.$createdAt,
   },
   (all) => all,
 );
@@ -36,6 +38,8 @@ spread({
     owners: searchReposFilters.$owners,
     stars: searchReposFilters.$stars,
     forks: searchReposFilters.$forks,
+    pushedTo: searchReposFilters.$pushedTo,
+    createdAt: searchReposFilters.$createdAt,
   },
 });
 

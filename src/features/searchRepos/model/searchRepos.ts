@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { sample } from 'effector';
 
 import { searchRepos } from '../api';
@@ -11,8 +12,6 @@ const $searchedRepos = searchRepos.$data.map((data) => data?.items ?? []);
 const $searchedReposIsEmpty = searchRepos.$data.map((data) =>
   data !== null ? data.items.length === 0 : true,
 );
-
-const $searchedReposIsLoading = searchRepos.$pending;
 
 sample({
   clock: [
@@ -47,22 +46,48 @@ sample({
 
     const queryStars = Boolean(parseInt(values.stars.to ?? '', 10))
       ? ` stars:${values.stars.operator === '..' ? values.stars.from : ''}${
-          values.stars.operator
+          values.stars.operator === '=' ? '' : values.stars.operator
         }${values.stars.to}`
       : '';
 
     const queryForks = Boolean(parseInt(values.forks.to ?? '', 10))
       ? ` forks:${values.forks.operator === '..' ? values.forks.from : ''}${
-          values.forks.operator
+          values.forks.operator === '=' ? '' : values.forks.operator
         }${values.forks.to}`
       : '';
 
+    const queryPushedTo = Boolean(values.pushedTo.to ?? '')
+      ? ` pushed:${
+          values.pushedTo.operator === '..'
+            ? dayjs(values.pushedTo.from).format('YYYY-MM-DD')
+            : ''
+        }${
+          values.pushedTo.operator === '=' ? '' : values.pushedTo.operator
+        }${dayjs(values.pushedTo.to).format('YYYY-MM-DD')}`
+      : '';
+
+    const queryCreatedAt = Boolean(values.createdAt.to ?? '')
+      ? ` created:${
+          values.createdAt.operator === '..'
+            ? dayjs(values.createdAt.from).format('YYYY-MM-DD')
+            : ''
+        }${
+          values.createdAt.operator === '=' ? '' : values.createdAt.operator
+        }${dayjs(values.createdAt.to).format('YYYY-MM-DD')}`
+      : '';
+
     params.q =
-      values.query + queryLangs + queryOwners + queryStars + queryForks;
+      values.query +
+      queryLangs +
+      queryOwners +
+      queryStars +
+      queryForks +
+      queryPushedTo +
+      queryCreatedAt;
 
     return params;
   },
   target: searchRepos.start,
 });
 
-export { $searchedRepos, $searchedReposIsEmpty, $searchedReposIsLoading };
+export { $searchedRepos, $searchedReposIsEmpty };

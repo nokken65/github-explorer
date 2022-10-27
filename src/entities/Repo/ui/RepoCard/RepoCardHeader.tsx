@@ -11,9 +11,22 @@ type TRepoCardHeaderProps = {
 
 const RepoCardHeaderView = ({ name, ownerName }: TRepoCardHeaderProps) => {
   return (
-    <Container>
-      <Link to={notFoundRoute}>
-        {ownerName}/{name}
+    <Container
+      as='h2'
+      className='min-h-[28px] flex-row flex-nowrap overflow-x-hidden text-ellipsis whitespace-nowrap text-lg font-bold'
+    >
+      <Link
+        className='overflow-x-hidden text-ellipsis whitespace-nowrap text-[var(--rs-text-primary);]'
+        to={notFoundRoute}
+      >
+        {ownerName}
+      </Link>
+      /
+      <Link
+        className='overflow-x-hidden text-ellipsis whitespace-nowrap'
+        to={notFoundRoute}
+      >
+        {name}
       </Link>
     </Container>
   );

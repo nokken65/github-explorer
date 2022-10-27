@@ -1,7 +1,7 @@
 import { reflect } from '@effector/reflect';
 import { memo, useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { Button, Form, InputGroup } from 'rsuite';
+import { Button, Form, InputGroup, Tag } from 'rsuite';
 
 import { ReactComponent as RemoveIcon } from '@/shared/icons/remove-icon.svg';
 
@@ -34,15 +34,18 @@ const SearchReposQueryFieldView = ({
           type='search'
         />
         <InputGroup.Addon className='-mr-[1px] h-full !p-0'>
-          {hasCancel && (
-            <Button
-              appearance='subtle'
-              className='mr-2 flex items-center justify-center p-0'
-              onClick={reset}
-            >
-              <RemoveIcon className='h-5 w-5 fill-red-400/50 transition-all duration-150 ease-in-out hover:fill-red-400' />
-            </Button>
-          )}
+          <>
+            <Tag className='mr-2 font-bold opacity-60'>{'Ctrl+K'}</Tag>
+            {hasCancel && (
+              <Button
+                appearance='subtle'
+                className='mr-2 flex items-center justify-center p-0'
+                onClick={reset}
+              >
+                <RemoveIcon className='h-5 w-5 fill-red-400/50 transition-all duration-150 ease-in-out hover:fill-red-400' />
+              </Button>
+            )}
+          </>
 
           <Button appearance='primary' className='rounded-l-none' type='submit'>
             Search

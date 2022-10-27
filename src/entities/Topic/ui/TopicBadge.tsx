@@ -11,7 +11,12 @@ type TTopicBadgeProps = {
 const TopicBadgeView = ({ name }: TTopicBadgeProps) => {
   return (
     <Link to={notFoundRoute}>
-      <Tag>{name}</Tag>
+      <Tag
+        className='rounded-full bg-[var(--rs-blue-700);] py-[1px] hover:opacity-80'
+        color='blue'
+      >
+        {name}
+      </Tag>
     </Link>
   );
 };

@@ -7,7 +7,7 @@ type TRepoCardBodyProps = {
 
 const RepoCardBodyView = ({ description }: TRepoCardBodyProps) => {
   return (
-    <Container>
+    <Container className='h-full'>
       <p>{description}</p>
     </Container>
   );

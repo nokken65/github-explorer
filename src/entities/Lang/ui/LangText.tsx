@@ -1,5 +1,5 @@
-import { Badge, Text } from '@nextui-org/react';
 import { memo } from 'react';
+import { Badge } from 'rsuite';
 
 type TLangTextProps = {
   name: string;
@@ -8,24 +8,19 @@ type TLangTextProps = {
 
 const LangTextView = ({ name, color }: TLangTextProps) => {
   return (
-    <Text
-      css={{
-        display: 'inline-flex',
-        flexWrap: 'nowrap',
-        alignItems: 'center',
-        gap: '$2',
-        fontSize: '$sm',
-      }}
-    >
+    <span className='flex items-center gap-1'>
       {color && (
         <Badge
-          disableOutline
-          style={{ backgroundColor: color }}
-          variant='dot'
+          style={{
+            borderRadius: '50%',
+            minWidth: '12px',
+            minHeight: '12px',
+            backgroundColor: color,
+          }}
         />
       )}
       {name}
-    </Text>
+    </span>
   );
 };
 

@@ -16,6 +16,16 @@ export type TSearchReposFormInputs = {
     from?: string;
     to?: string;
   };
+  pushedTo: {
+    operator: typeof SEARCH_REPOS_OPERATORS[number];
+    from?: string;
+    to?: string;
+  };
+  createdAt: {
+    operator: typeof SEARCH_REPOS_OPERATORS[number];
+    from?: string;
+    to?: string;
+  };
 };
 
 export const SEARCH_REPOS_OPERATORS = ['=', '<', '>', '..'] as const;

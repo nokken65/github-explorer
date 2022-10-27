@@ -1,20 +1,27 @@
 import { reflect } from '@effector/reflect';
 import { memo, useState } from 'react';
-import { Button, Container, Drawer } from 'rsuite';
+import { Button, Container, Drawer, Loader } from 'rsuite';
 
+import { searchRepos } from '../../api';
 import { searchReposForm } from '../../model';
+import { SearchReposCreatedAtField } from './SearchReposCreatedAtField';
 import { SearchReposForksField } from './SearchReposForksField';
 import { SearchReposLangsField } from './SearchReposLangsField';
 import { SearchReposOrderField } from './SearchReposOrderField';
 import { SearchReposOwnersField } from './SearchReposOwnersField';
+import { SearchReposPushedToField } from './SearchReposPushedToField';
 import { SearchReposSortField } from './SearchReposSortField';
 import { SearchReposStarsField } from './SearchReposStarsField';
 
 type TSearchReposFiltersProps = {
+  isLoading: boolean;
   submit: () => void;
 };
 
-const SearchReposFiltersView = ({ submit }: TSearchReposFiltersProps) => {
+const SearchReposFiltersView = ({
+  isLoading,
+  submit,
+}: TSearchReposFiltersProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
 
   const show = () => setIsShow(true);
@@ -25,6 +32,7 @@ const SearchReposFiltersView = ({ submit }: TSearchReposFiltersProps) => {
       <Container className='flex-row items-center justify-between gap-4'>
         <SearchReposSortField />
         <SearchReposOrderField />
+        {isLoading && <Loader size='sm' />}
         <Button
           appearance='subtle'
           className='ml-auto flex items-center gap-2'
@@ -54,6 +62,8 @@ const SearchReposFiltersView = ({ submit }: TSearchReposFiltersProps) => {
           <SearchReposOwnersField />
           <SearchReposStarsField />
           <SearchReposForksField />
+          <SearchReposPushedToField />
+          <SearchReposCreatedAtField />
         </Drawer.Body>
       </Drawer>
     </>
@@ -64,6 +74,7 @@ export const SearchReposFilters = memo(
   reflect({
     view: SearchReposFiltersView,
     bind: {
+      isLoading: searchRepos.$pending,
       submit: searchReposForm.formSubmitted,
     },
   }),

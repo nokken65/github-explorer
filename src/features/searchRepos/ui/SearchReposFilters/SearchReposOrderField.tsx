@@ -13,10 +13,10 @@ const SearchReposOrderFieldView = () => {
         name='order'
       >
         <Radio value='desc'>
-          <OrderIcon className='rotate-180' />
+          <OrderIcon />
         </Radio>
         <Radio value='asc'>
-          <OrderIcon />
+          <OrderIcon className='rotate-180' />
         </Radio>
       </Form.Control>
     </Form.Group>

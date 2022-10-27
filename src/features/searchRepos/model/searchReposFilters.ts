@@ -8,6 +8,12 @@ const $langs = createStore<TSearchReposFormInputs['langs']>([]);
 const $owners = createStore<TSearchReposFormInputs['owners']>([]);
 const $stars = createStore<TSearchReposFormInputs['stars']>({ operator: '>' });
 const $forks = createStore<TSearchReposFormInputs['forks']>({ operator: '>' });
+const $pushedTo = createStore<TSearchReposFormInputs['pushedTo']>({
+  operator: '>',
+});
+const $createdAt = createStore<TSearchReposFormInputs['createdAt']>({
+  operator: '>',
+});
 
 export const searchReposFilters = {
   $sort,
@@ -16,4 +22,6 @@ export const searchReposFilters = {
   $owners,
   $stars,
   $forks,
+  $pushedTo,
+  $createdAt,
 };
