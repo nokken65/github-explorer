@@ -4,7 +4,9 @@ specifiers:
   '@effector/reflect': ^8.0.0
   '@farfetched/core': ^0.2.5
   '@farfetched/zod': ^0.1.0
+  '@types/emoji-js': ^3.5.0
   '@types/flat': ^5.0.2
+  '@types/marked': ^4.0.7
   '@types/node': ^18.8.5
   '@types/react': ^18.0.21
   '@types/react-dom': ^18.0.6
@@ -19,6 +21,7 @@ specifiers:
   effector: ^22.3.0
   effector-react: ^22.3.3
   effector-storage: ^5.0.1
+  emoji-js: ^3.7.0
   eslint: ^8.25.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-effector: ^0.10.3
@@ -28,8 +31,10 @@ specifiers:
   eslint-plugin-react-hooks: ^4.6.0
   eslint-plugin-simple-import-sort: ^8.0.0
   flat: ^5.0.2
+  highlight.js: ^11.6.0
   history: ^5.3.0
   less: ^4.1.3
+  marked: ^4.1.1
   openapi-typescript: ^5.4.1
   patronum: ^1.12.3
   postcss: ^8.4.18
@@ -57,8 +62,11 @@ dependencies:
   effector: 22.3.0
   effector-react: 22.3.3_fqnc2pqlfbgfkkbezvfttjatja
   effector-storage: 5.0.1_effector@22.3.0
+  emoji-js: 3.7.0
   flat: 5.0.2
+  highlight.js: 11.6.0
   history: 5.3.0
+  marked: 4.1.1
   patronum: 1.12.3_effector@22.3.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -67,7 +75,9 @@ dependencies:
   zod: 3.19.1
 
 devDependencies:
+  '@types/emoji-js': 3.5.0
   '@types/flat': 5.0.2
+  '@types/marked': 4.0.7
   '@types/node': 18.11.2
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
@@ -697,6 +707,10 @@ packages:
     resolution: {integrity: sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==}
     dev: false
 
+  /@types/emoji-js/3.5.0:
+    resolution: {integrity: sha512-6dWe6Hyo7PR5tNEvWNAtnOeiQTLFoyPEofUc/waVJC1fkQqvJPw1j30szbzfJRehyg1/Mw82p4w714x0ImF9ZA==}
+    dev: true
+
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
@@ -712,6 +726,10 @@ packages:
   /@types/lodash/4.14.186:
     resolution: {integrity: sha512-eHcVlLXP0c2FlMPm56ITode2AgLMSa6aJ05JTTbYbI+7EMkCEE5qk2E41d5g2lCVTqRe0GnnRFurmlCsDODrPw==}
     dev: false
+
+  /@types/marked/4.0.7:
+    resolution: {integrity: sha512-eEAhnz21CwvKVW+YvRvcTuFKNU9CV1qH+opcgVK3pIMI6YZzDm6gc8o2vHjldFk6MGKt5pueSB7IOpvpx5Qekw==}
+    dev: true
 
   /@types/node/18.11.2:
     resolution: {integrity: sha512-BWN3M23gLO2jVG8g/XHIRFWiiV4/GckeFIqbU/C4V3xpoBBWSMk4OZomouN0wCkfQFPqgZikyLr7DOYDysIkkw==}
@@ -1383,6 +1401,16 @@ packages:
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
+
+  /emoji-datasource/7.0.2:
+    resolution: {integrity: sha512-F5TTUSktTIfbjHIlaz8tjsQ8EAD0UpJtj1i5O13jQARWTddtFgam3nE1W5WgSQoqU/cuTnF1H9tK/wlCOyzfiA==}
+    dev: false
+
+  /emoji-js/3.7.0:
+    resolution: {integrity: sha512-YNJCF8DOYI1AZnkSIcJbmIN6rtXtSv5DObqzvHuGAP8VLQc15MMN+DG9rQVSfHPXGFkFub9pGvbiO4FNz5+sjg==}
+    dependencies:
+      emoji-datasource: 7.0.2
+    dev: false
 
   /emoji-regex/9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
@@ -2140,6 +2168,11 @@ packages:
       function-bind: 1.1.1
     dev: true
 
+  /highlight.js/11.6.0:
+    resolution: {integrity: sha512-ig1eqDzJaB0pqEvlPVIpSSyMaO92bH1N2rJpLMN/nX396wTpDA4Eq0uK+7I/2XG17pFaaKE0kjV/XPeGt7Evjw==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+
   /history/5.3.0:
     resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
     dependencies:
@@ -2459,6 +2492,12 @@ packages:
       semver: 5.7.1
     dev: true
     optional: true
+
+  /marked/4.1.1:
+    resolution: {integrity: sha512-0cNMnTcUJPxbA6uWmCmjWz4NJRe/0Xfk2NhXCUHjew9qJzFN20krFnsUe7QynwqOwa5m1fZ4UDg0ycKFVC0ccw==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: false
 
   /merge2/1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}

@@ -2,7 +2,7 @@ import { Link } from 'atomic-router-react';
 import { memo } from 'react';
 import { Container } from 'rsuite';
 
-import { notFoundRoute } from '@/shared/config/routes';
+import { notFoundRoute, repoRoute } from '@/shared/config/routes';
 
 type TRepoCardHeaderProps = {
   name: string;
@@ -24,7 +24,8 @@ const RepoCardHeaderView = ({ name, ownerName }: TRepoCardHeaderProps) => {
       /
       <Link
         className='overflow-x-hidden text-ellipsis whitespace-nowrap'
-        to={notFoundRoute}
+        params={{ owner: ownerName, repo: name }}
+        to={repoRoute}
       >
         {name}
       </Link>
