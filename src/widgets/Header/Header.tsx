@@ -2,7 +2,7 @@ import { Link } from 'atomic-router-react';
 import { memo } from 'react';
 import { Header as RSHeader, Nav, Navbar } from 'rsuite';
 
-import { DarkModeToggler } from '@/features/toggleDarkMode';
+import { DarkModeToggler } from '@/features/changeTheme';
 import { homeRoute } from '@/shared/config/routes';
 
 const HeaderView = () => {

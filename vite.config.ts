@@ -1,10 +1,12 @@
 import react from '@vitejs/plugin-react';
+import Unocss from 'unocss/vite';
 import { defineConfig } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [
+    Unocss(),
     svgrPlugin({
       include: 'src/**/*.svg',
       svgrOptions: { memo: true, svgo: true, icon: true, exportType: 'named' },
@@ -28,7 +30,7 @@ export default defineConfig({
           'router-vendor': ['atomic-router', 'atomic-router-react', 'history'],
           'api-vendor': ['@farfetched/core', '@farfetched/zod'],
           'rsuite-vendor': ['rsuite'],
-          'other-vendor': [
+          'utils-vendor': [
             'react-hotkeys-hook',
             'zod',
             'dayjs',

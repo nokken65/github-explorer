@@ -4,7 +4,7 @@ import { Container } from 'rsuite';
 type TRepoCardFooterProps = PropsWithChildren;
 
 const RepoCardFooterView = ({ children }: TRepoCardFooterProps) => {
-  return <Container className='gap-4'>{children}</Container>;
+  return <Container className='justify-end gap-2'>{children}</Container>;
 };
 
 export const RepoCardFooter = memo(RepoCardFooterView);

@@ -1,0 +1,63 @@
+.tag {
+  $root: &;
+
+  @apply w-fit select-none rounded-full bg-primary/30;
+  @apply duration-150 ease-out;
+  @apply light:text-primary-600;
+  @apply dark:text-primary;
+
+  // link
+  &-hovered {
+    @apply hover:no-underline;
+    @apply light:hover:bg-primary light:hover:text-white light:focus:bg-primary light:focus:text-white;
+    @apply dark:hover:bg-primary dark:hover:text-white dark:focus:bg-primary dark:focus:text-white;
+  }
+
+  // closable
+  &-closable {
+    @apply relative inline-flex cursor-pointer gap-1;
+    // overflow-x-hidden;
+    @apply light:hover:bg-red-500 light:hover:text-white light:focus:bg-red-500 light:focus:text-white;
+    @apply dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white;
+
+    &:hover,
+    &:focus {
+      & > #{$root}-icon-close {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  &-icon-close {
+    @apply absolute right-1 top-1/2 -translate-y-1/2 opacity-0 duration-150 ease-out;
+    @apply light:fill-white;
+    @apply dark:fill-white;
+  }
+
+  // lg size
+  &-lg {
+    @apply px-3 py-0.5 text-base;
+
+    &#{$root}-closable {
+      @apply hover:pr-6 focus:pr-6;
+    }
+  }
+
+  // md size
+  &-md {
+    @apply px-2 py-0.5 text-sm;
+
+    &#{$root}-closable {
+      @apply hover:pr-5 focus:pr-5;
+    }
+  }
+
+  // sm size
+  &-sm {
+    @apply px-2 py-0.5 text-xs;
+
+    &#{$root}-closable {
+      @apply hover:pr-4 focus:pr-4;
+    }
+  }
+}

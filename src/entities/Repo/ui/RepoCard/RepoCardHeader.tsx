@@ -2,32 +2,22 @@ import { Link } from 'atomic-router-react';
 import { memo } from 'react';
 import { Container } from 'rsuite';
 
-import { notFoundRoute, repoRoute } from '@/shared/config/routes';
+import { repoRoute } from '@/shared/config/routes';
 
 type TRepoCardHeaderProps = {
-  name: string;
-  ownerName: string;
+  repo: string;
+  owner: string;
 };
 
-const RepoCardHeaderView = ({ name, ownerName }: TRepoCardHeaderProps) => {
+const RepoCardHeaderView = ({ repo, owner }: TRepoCardHeaderProps) => {
   return (
-    <Container
-      as='h2'
-      className='min-h-[28px] flex-row flex-nowrap overflow-x-hidden text-ellipsis whitespace-nowrap text-lg font-bold'
-    >
+    <Container as='h2'>
       <Link
-        className='overflow-x-hidden text-ellipsis whitespace-nowrap text-[var(--rs-text-primary);]'
-        to={notFoundRoute}
-      >
-        {ownerName}
-      </Link>
-      /
-      <Link
-        className='overflow-x-hidden text-ellipsis whitespace-nowrap'
-        params={{ owner: ownerName, repo: name }}
+        className='w-fit overflow-x-hidden text-ellipsis whitespace-nowrap text-lg font-bold'
+        params={{ repo, owner }}
         to={repoRoute}
       >
-        {name}
+        <b className='text-black dark:text-white'>{owner}</b>/{repo}
       </Link>
     </Container>
   );

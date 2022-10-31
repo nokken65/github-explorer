@@ -1,0 +1,30 @@
+@font-face {
+  font-family: Apple-System;
+  src: local(-apple-system), local(BlinkMacSystemFont), local(system-ui);
+}
+
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: Apple-System, Arial, Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', STXihei, sans-serif;
+}
+
+body {
+  @apply light:bg-gray-100 light:text-gray-800;
+
+  @apply dark:bg-gray-800 dark:text-white;
+}
+
+a {
+  @apply transition-colors duration-150 ease-out;
+
+  @apply hover:underline focus:underline active:underline;
+
+  @apply light:text-primary-600 light:hover:text-primary-500  light:focus:text-primary-500  light:active:text-primary-500;
+
+  @apply dark:text-primary-500 dark:hover:text-primary-400 dark:focus:text-primary-400 dark:active:text-primary-400;
+}
+
+::selection {
+  @apply bg-primary;
+}

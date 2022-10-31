@@ -1,7 +1,7 @@
 import { list, reflect } from '@effector/reflect';
 import { Container } from 'rsuite';
 
-import { LangText } from '@/entities/Lang';
+import { LangTag } from '@/entities/Lang';
 import { LicenseName } from '@/entities/License';
 import { RepoCard } from '@/entities/Repo';
 import { StargazersCount } from '@/entities/Stargazer';
@@ -18,20 +18,20 @@ import {
 const SearchReposListItem = (repo: TSearchReposResultData['items'][number]) => {
   return (
     <RepoCard key={repo.id}>
-      <RepoCard.Header name={repo.name} ownerName={repo.owner?.login ?? ''} />
+      <RepoCard.Header owner={repo.owner?.login ?? ''} repo={repo.name} />
       {repo.description && <RepoCard.Body description={repo.description} />}
       <RepoCard.Footer>
         <>
           {!!repo.topics?.length && (
-            <Container className='mt-auto flex-row flex-wrap gap-1'>
+            <Container className='flex-row flex-wrap gap-1'>
               {repo.topics.map((topic) => (
                 <TopicBadge key={topic} name={topic} />
               ))}
             </Container>
           )}
-          <Container className='flex-row items-end gap-3 text-xs'>
+          <Container className='flex-row items-end gap-2 text-xs'>
             <StargazersCount count={repo.stargazers_count} />
-            {repo.language && <LangText name={repo.language} />}
+            {repo.language && <LangTag name={repo.language} />}
             {repo.license && <LicenseName name={repo.license.name} />}
             <UpdatedAtText date={new Date(repo.updated_at)} />
           </Container>

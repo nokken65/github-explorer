@@ -1,1 +1,1 @@
-export * from './LangText';
+export * from './LangTag';

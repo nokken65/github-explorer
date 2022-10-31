@@ -37,9 +37,6 @@ const SearchReposLangsFieldView = ({ langs }: TSearchReposLangsFieldProps) => {
             {item.color && (
               <Badge
                 style={{
-                  borderRadius: '50%',
-                  minWidth: '12px',
-                  minHeight: '12px',
                   background: item.color,
                 }}
               />
